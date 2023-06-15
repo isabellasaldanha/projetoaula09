@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <a href="./postar.html">Cadastrar nova pessoa</a>
+    <div id="lista"></div>
+
+    <script>
+        const url = '/listar';
+        
+        // Acessa a resposta do endpoint para a url
+        fetch(url)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            let pessoas = data;
+            // Define a variável saída, uma string vazia
+            let saida = '';
+
+            // Roda uma função para linha do banco retornada
+            pessoas.map(function(item) {
+              saida += '<h1>Nome: ' + item.nome + '</h1><h2>Idade: ' + item.idade + '</h2><form action="/removePessoa/' + item.id + '" method="POST"><button type="submit">Deletar</button></form> <a href="editar.html?id=' + item.id + '"><button>Editar</button></a></br>'
+            });
+            // Passa a saída pra dentro da div lista
+            document.getElementById('lista').innerHTML = saida;
+          })
+          // Loga possíveis erros
+          .catch(function(error) {
+            console.log(error);
+          });
+          
+    
+      </script>
+</body>
+</html>
